@@ -1,0 +1,14 @@
+class Solution {
+    static boolean searchKey(int n, Node head, int key) {
+         Node temp = head; // Start from the head
+
+        while (temp != null) { // Traverse the linked list
+            if (temp.data == key) {
+                return true; // Found the key
+            }
+            temp = temp.next; // Move to the next node
+        }
+
+        return false; // Key not found
+    }
+}
