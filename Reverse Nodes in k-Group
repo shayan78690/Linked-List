@@ -1,39 +1,51 @@
 /**
  * Definition for singly-linked list.
  * public class ListNode {
- * int val;
- * ListNode next;
- * ListNode() {}
- * ListNode(int val) { this.val = val; }
- * ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
 class Solution {
-    public ListNode reverseBetween(ListNode head, int left, int right) {
-        if(left == right) {
+    public ListNode reverseKGroup(ListNode head, int k) {
+                if(k <= 1 || head == null) {
             return head;
-        }
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-
-        ListNode leftPrev = dummy;
+        } 
         ListNode current = head;
-        for (int i = 0; i < left - 1; i++) {
-            leftPrev = current;
-            current = current.next;
-        }
-
         ListNode prev = null;
-        ListNode next;
-        for (int i = 0; i < (right - left + 1); i++) {
-            next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
+        while(true) {
+            ListNode check = current;
+            
+            for(int i = 0;i < k; i++) {
+                if(check == null) {
+                    return head;
+                }
+                check = check.next;
+            }
+                ListNode last = prev;
+                ListNode newEnd = current;
+                ListNode next = null;
+                for(int i = 0; current != null && i < k; i++) {
+                       next = current.next;
+                current.next = prev;
+                prev = current;
+                current = next;
+            }
+    
+            if(last != null) {
+                last.next = prev;
+            } else {
+                head = prev;
+            }
+    
+            newEnd.next = current;
+            if(current == null) {
+                break;
+            }
+            prev = newEnd;
         }
-
-        leftPrev.next.next = current;
-        leftPrev.next = prev;
-        return dummy.next;
+        return head;
     }
 }
