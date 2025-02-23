@@ -1,0 +1,59 @@
+class Solution {
+    public Node deleteNode(Node head, int x) {
+        if(head == null || x <= 0) {
+            return null;
+        }
+        Node temp = head;
+        int count = 0;
+        while(temp != null) {
+            count++;
+            if(count == x) {
+                break;
+            }
+            temp = temp.next;
+        }
+        if (temp == null) return head;
+        
+        Node prev = temp.prev;
+        Node next = temp.next;
+        
+        if(prev == null && next == null) {
+            head = null;
+            return null;
+        } else if(prev == null) {
+            return removefirst(head);
+        } else if(next == null) {
+            return removeLast(head);
+        } else {
+            prev.next = next;
+            next.prev = prev;
+            temp.prev=  null;
+            temp.next = null;
+        }
+        return head;
+    }
+    
+    public Node removefirst(Node head) {
+        if(head == null || head.next == null) {
+            return null;
+        }
+    
+        
+        head = head.next;
+        head.prev = null;
+        return head;
+    }
+    
+    public Node removeLast(Node head) {
+        if(head == null || head.next == null) {
+            return null;
+        }
+
+        Node temp = head;
+        while(temp.next != null) {
+            temp = temp.next;
+        }
+        temp.prev.next = null;
+        return head;
+    }
+}
