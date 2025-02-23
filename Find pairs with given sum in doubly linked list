@@ -1,0 +1,37 @@
+class Solution {
+    public static ArrayList<ArrayList<Integer>> findPairsWithGivenSum(int target, Node head) {
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>();
+
+        
+        Node left = head;
+        Node right = findTail(head);
+        
+        while(left != null && right != null && left.data < right.data) {
+            ArrayList<Integer> list = new ArrayList<>();
+            if(left.data + right.data == target) {
+                list.add(left.data);
+                list.add(right.data);
+                ans.add(list);
+                left = left.next;
+                right = right.prev;
+            } else if(left.data + right.data < target) {
+                left = left.next;
+            } else {
+                right = right.prev;
+            }
+            
+        }
+        return ans;
+    }
+    
+    public static Node findTail(Node head) {
+        if(head == null) {
+            return null;
+        }
+        Node tail = head;
+        while(tail.next != null) {
+            tail = tail.next;
+        }
+        return tail;
+    }
+}
