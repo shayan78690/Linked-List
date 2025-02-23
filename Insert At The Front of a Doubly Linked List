@@ -1,0 +1,49 @@
+/****************************************************************
+
+ Following is the class structure of the Node class:
+
+ class Node
+ {
+     public int value;
+     public Node next;
+     public Node prev;
+
+     Node()
+     {
+         this.value = 0;
+         this.next = null;
+         this.prev = null;
+     }
+
+     Node(int value)
+     {
+         this.value = value;
+         this.next = null;
+         this.prev = null;
+     }
+
+     Node(int value, Node next, Node prev)
+     {
+         this.value = value;
+         this.next = next;
+         this.prev = prev;
+     }
+ }
+
+ *****************************************************************/
+
+
+public class Solution {
+    public static Node insertAtFront(Node head, int k) {
+        Node newNode  = new Node(k);
+        if(head == null) {
+            head = newNode;
+            return head;
+        }
+        newNode.next = head;
+        head = newNode;
+        head.prev = null;
+
+        return head;      
+    }
+}
