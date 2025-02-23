@@ -30,7 +30,7 @@ class Solution {
             current.next = newNode;
             current = current.next;
         }
-        if (carry == 1) {
+        if (carry > 0) {
             ListNode newNode = new ListNode(carry);
             current.next = newNode;
         }
