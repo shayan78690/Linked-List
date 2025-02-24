@@ -10,42 +10,53 @@
  */
 class Solution {
     public ListNode reverseKGroup(ListNode head, int k) {
-                if(k <= 1 || head == null) {
+        if(head == null || k == 1) {
             return head;
-        } 
-        ListNode current = head;
+        }
+        ListNode temp = head;
         ListNode prev = null;
-        while(true) {
-            ListNode check = current;
-            
-            for(int i = 0;i < k; i++) {
-                if(check == null) {
-                    return head;
+        while(temp != null) {
+            ListNode kthNode = getKthNode(temp, k);
+            if(kthNode == null) {
+                if(prev != null) {
+                    prev.next = temp;
+                    break;
                 }
-                check = check.next;
             }
-                ListNode last = prev;
-                ListNode newEnd = current;
-                ListNode next = null;
-                for(int i = 0; current != null && i < k; i++) {
-                       next = current.next;
-                current.next = prev;
-                prev = current;
-                current = next;
-            }
-    
-            if(last != null) {
-                last.next = prev;
+
+            ListNode next = kthNode.next;
+            kthNode.next = null;
+            reverse(temp);
+
+            if(head == temp) {
+                head = kthNode;
             } else {
-                head = prev;
+                prev.next = kthNode;
             }
-    
-            newEnd.next = current;
-            if(current == null) {
-                break;
-            }
-            prev = newEnd;
+            
+            prev = temp;
+            temp = next;
         }
         return head;
+    }
+    public ListNode getKthNode(ListNode temp, int k) {
+        k -= 1;
+        while(temp != null && k > 0) {
+            k--;
+            temp = temp.next;
+        }
+        return temp;
+    }
+    public ListNode reverse(ListNode head) {
+        ListNode current = head;
+        ListNode prev = null;
+        ListNode next;
+        while(current != null) {
+            next = current.next;
+            current.next = prev;
+            prev = current;
+            current = next;
+        }
+        return prev;
     }
 }
